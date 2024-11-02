@@ -1,6 +1,6 @@
 package db;
 
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,8 +10,8 @@ import java.util.Properties;
 public class DB {
     private static Connection conn = null;
 
-    public static Connection getConnection(){
-        if(conn == null){
+    public static Connection getConnection() {
+        if (conn == null) {
             try {
                 Properties props = loadProperties();
                 String url = props.getProperty("dburl");
@@ -23,8 +23,8 @@ public class DB {
         return conn;
     }
 
-    public static void closeConnection(){
-        if(conn == null){
+    public static void closeConnection() {
+        if (conn != null) {
             try {
                 conn.close();
             } catch (SQLException e) {
@@ -33,9 +33,12 @@ public class DB {
         }
     }
 
-    private static Properties loadProperties(){
-        try(FileInputStream fs = new FileInputStream("db.properties")){
+    private static Properties loadProperties() {
+        try (InputStream fs = DB.class.getClassLoader().getResourceAsStream("db.properties")) {
             Properties props = new Properties();
+            if (fs == null) {
+                throw new DbException("Arquivo db.properties não encontrado no classpath");
+            }
             props.load(fs);
             return props;
         } catch (IOException e) {
@@ -43,3 +46,4 @@ public class DB {
         }
     }
 }
+
