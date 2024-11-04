@@ -1,3 +1,4 @@
+Para a execução do programa, é preciso abrir com o inteliJ na pasta "src". 
 Carrinho de Compras
 Este projeto implementa um sistema de carrinho de compras em Java com um banco de dados MySQL para armazenar produtos e itens no carrinho. 
 Funcionalidades: 
